@@ -3,22 +3,21 @@
 void Zombie::locateTarget()
 {
 	if (this->target == nullptr) {
-		float alpha = 85.0f;
-		float fieldOfVision = 20.0f;
+		//Implement locating target
 	}
 }
 
 void Zombie::moveTowardsTarget()
 {
-	if (this->target == nullptr || !this->target->isDead()) {
+	if (this->target == nullptr || !this->target->isAlive()) {
 		return;
 	}
 
 	if (!calc.areVectorsTheSameAproximately(this->pos, target->pos, this->attackRange))
 	{
-		Vector2 step = Vector2{ (float)((target->pos.x > this->pos.x) - (target->pos.x < this->pos.x)) * this->stats.sprintSpeed, (float)((target->pos.y > this->pos.y) - (target->pos.y < this->pos.y)) * this->stats.sprintSpeed };
-		this->pos = calc.addTwoVectors(this->pos, step);
-		this->rotation = calc.alphaAngleCalcualte((step.x * 10.0f - this->pos.x), (step.y * 10.0f - this->pos.y));
+		Vector2 step = Vector2{ (float)((target->pos.x > this->pos.x) - (target->pos.x < this->pos.x)), (float)((target->pos.y > this->pos.y) - (target->pos.y < this->pos.y)) };
+		this->pos = calc.addTwoVectors(this->pos, calc.multplyVector(step, this->stats.sprintSpeed));
+		this->rotation = this->calc.alphaAngleCalcualte((step.x), (step.y)) * RAD2DEG;
 		this->boundingBox = Rectangle{ this->pos.x, this->pos.y, (float)this->charWidth, (float)this->charHeight };
 	}
 	else {
@@ -29,13 +28,10 @@ void Zombie::moveTowardsTarget()
 void Zombie::attack()
 {
 	float attackDamage = 20.0f;
-	this->target->hit(attackDamage);
+	//TODO: Implement attack
 }
 
-void Zombie::drawPov()
-{
-	Vector2 root = this->pos;
-}
+
 
 void Zombie::onSpot(Alive* spotted)
 {
@@ -56,16 +52,32 @@ void Zombie::onDie()
 	this->alive = false;
 }
 
-void Zombie::init(Alive* element)
+void Zombie::init()
 {
-	this->target = element;
+	this->target = nullptr;
 	this->stats.sprintSpeed = 2.0f;
 }
 
 void Zombie::update()
 {
+	locateTarget();
 	updateAlive();
 	moveTowardsTarget();
+}
+
+void Zombie::drawPov()
+{
+	float width = 100.0f;
+	float height = 100.0f;
+
+	DrawRectanglePro(Rectangle{ this->pos.x + this->charWidth/2, this->pos.y, width, height }, Vector2{ 0, height / 2}, this->rotation, ColorFromHSV(50, 150, 40));
+}
+
+void Zombie::drawElement()
+{
+	Rectangle rect = Rectangle{ this->pos.x, this->pos.y, (float)this->charWidth, (float)this->charHeight };
+	Vector2 origin = Vector2{ (float)this->charWidth / 2, (float)this->charHeight / 2 };
+	DrawRectanglePro(rect, origin, this->rotation, this->characterColor);
 }
 
 void Zombie::draw()
@@ -74,7 +86,5 @@ void Zombie::draw()
 		return;
 	}
 
-	Rectangle rect = Rectangle{ this->pos.x, this->pos.y, (float)this->charWidth, (float)this->charHeight };
-	Vector2 origin = Vector2{ (float)this->charWidth / 2, (float)this->charHeight / 2 };
-	DrawRectanglePro(rect, origin, this->rotation, this->characterColor);
+	this->drawElement();
 }

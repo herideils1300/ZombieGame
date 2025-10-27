@@ -1,11 +1,21 @@
 #include "Player.h"
+#include "Bullet.h"
 #define DEGREE_SCALE 57.2957795
 #define RAY_COLOR ColorFromHSV(100, 120, 88)
 #define DEAD_CONDITION if(!this->alive) {return;}
 
+void Player::onDie()
+{
+	this->alive = false;
+}
+
+void Player::onGetHit(float damage)
+{
+	this->health -= 20.0f;
+}
+
 void Player::updateMove()
 {
-	DEAD_CONDITION;
 
 	Vector2 posValue = this->pos;
 	float moveSpeed = 0.0f;
@@ -16,17 +26,21 @@ void Player::updateMove()
 		moveSpeed = this->stats.aimMoveSpeed;
 
 	this->isSprinting = (moveSpeed == this->stats.sprintSpeed);
-	this->pos = calc.addTwoVectors(this->pos, Vector2{ (float)(IsKeyDown(KEY_D) - IsKeyDown(KEY_A))* moveSpeed, (float)(IsKeyDown(KEY_S) - IsKeyDown(KEY_W))* moveSpeed });
+	Vector2 step = Vector2{ (float)(IsKeyDown(KEY_D) - IsKeyDown(KEY_A)) * moveSpeed, (float)(IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) * moveSpeed };
+	this->pos = calc.addTwoVectors(this->pos, step);
 	this->boundingBox = Rectangle{ this->pos.x, this->pos.y, this->charWidth, this->charHeight };
 }
 
 void Player::updateAim()
 {
-	DEAD_CONDITION;
 	//Rotation following mouse button
 	if (!this->isSprinting) {
 		Vector2 mousePos = GetMousePosition();
 		this->rotation = this->calc.alphaAngleCalcualte((mousePos.x - this->pos.x), (mousePos.y - this->pos.y)) * RAD2DEG;
+	}
+	else {
+		Vector2 step = Vector2{ (float)(IsKeyDown(KEY_D) - IsKeyDown(KEY_A)), (float)(IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) };
+		this->rotation = this->calc.alphaAngleCalcualte((step.x), (step.y)) * RAD2DEG;
 	}
 
 	// Aim logic; Draws a line towards the cursor when aiming
@@ -51,11 +65,11 @@ void Player::updateAim()
 
 void Player::updateFire()
 {
-	DEAD_CONDITION;
 	if (this->isAiming) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			Bullet* bullet = new Bullet();
 			this->isShooting = true;
-			this->env->broadcast(this, SignalType::SHOOT);
+			this->env->sendAttack(bullet);
 		}
 	}
 
@@ -69,6 +83,7 @@ void Player::init()
 
 void Player::update()
 {
+	DEAD_CONDITION;
 	this->updateAim();
 	this->updateFire();
 	this->updateMove();
@@ -76,7 +91,7 @@ void Player::update()
 
 void Player::draw()
 {
-
+	DEAD_CONDITION;
 	DrawRectanglePro(this->boundingBox, Vector2{ (float)this->boundingBox.width / 2, (float)this->boundingBox.height / 2 }, this->rotation, ColorFromHSV(100, 120, 88));
 	if (this->isAiming)
 	{

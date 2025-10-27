@@ -130,7 +130,6 @@
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="MechanicsEnums.h" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Singal.cpp" />
     <ClCompile Include="VectorCalculator.h" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="ZombieWordGame.cpp" />
@@ -141,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Alive.h" />
     <ClInclude Include="AliveRules.h" />
+    <ClInclude Include="AliveTypes.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Element.h" />
@@ -148,7 +148,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SingalTypes.h" />
+    <ClInclude Include="SignalTypes.h" />
     <ClInclude Include="StatsStruct.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>

@@ -2,8 +2,9 @@
 #include <raylib.h>
 #include <time.h>
 #include <random>
+#include "InEnvironment.h"
 
-class Element
+class Element : public InEnvironment
 {
 public:
 	virtual void init() {};
@@ -20,7 +21,7 @@ public:
 	float charWidth = 32.0f;
 	float charHeight = 32.0f;
 
-	Element() {
+	Element() : InEnvironment() {
 		srand(time(NULL));
 
 		this->pos.x = (float)(rand() % 640);
@@ -28,7 +29,7 @@ public:
 
 		this->boundingBox = Rectangle{ this->pos.x, this->pos.y, charWidth, charHeight };
 	};
-	Element(Vector2 pos, float rotation) {
+	Element(Vector2 pos, float rotation) : InEnvironment() {
 		this->pos = pos;
 		this->rotation = rotation;
 

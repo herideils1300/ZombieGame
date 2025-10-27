@@ -22,10 +22,14 @@ private:
 	VectorCalculator calc = VectorCalculator();
 
 	//Private funcs
+	//update func
 	void locateTarget();
 	void moveTowardsTarget();
 	void attack();
+
+	//draw funcs
 	void drawPov();
+	void drawElement();
 
 	void onGetHit(float damage) override;
 	void onDie() override;
@@ -34,7 +38,7 @@ private:
 public:
 	Zombie(Vector2 pos, float rotation) : Alive(pos, rotation) {
 	};
-	void init(Alive* element);
+	void init() override;
 	void update() override;
 	void draw() override;
 	void die();

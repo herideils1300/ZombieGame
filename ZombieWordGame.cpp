@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Zombie.h"
 #include <typeinfo>
+#include "Environment.h"
 
 
 
@@ -24,14 +25,14 @@ int main() {
 
 
 	//Character
-	std::vector<Alive*> characters = {
+	std::vector<Element*> characters = {
 		new Player(),
 		new Zombie(Vector2{ 100.0f, 100.0f }, 0.0f)
 	};
 
 	Environment* env = new Environment(characters);
 
-	for (Alive* ch : characters) {
+	for (Element* ch : characters) {
 		ch->init();
 	}
 
@@ -39,11 +40,11 @@ int main() {
 	while (!gameOver)
 	{
 		ClearBackground(backgroundColor);
-		for (Alive* ch : characters) {
+		for (Element* ch : characters) {
 			ch->update();
 		}
 		BeginDrawing();
-		for (Alive* ch : characters) {
+		for (Element* ch : characters) {
 			ch->draw();
 		}
 		EndDrawing();

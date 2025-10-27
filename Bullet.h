@@ -1,17 +1,21 @@
 #pragma once
 #include <raylib.h>
 #include "VectorCalculator.h"
-#include "Element.h"
+#include "Attack.h"
 
-class Bullet : public Element
+class Bullet : public Attack
 {
 private:
 	VectorCalculator calc = VectorCalculator();
+	Vector2 step = Vector2();
 	float speed = 5.0f;
-public:
-	Bullet() {};
-	void travel(Vector2 step);
-	void scanForHit(float width);
+	void travel();
 	void disperse();
+public:
+	Bullet() : Attack() {};
+	Vector2 giveStep();
+	void update() override;
+	void draw() override;
+
 };
 

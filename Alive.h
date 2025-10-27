@@ -1,13 +1,15 @@
 #pragma once
 #include "Element.h"
-#include "InEnvironment.h"
 #include "StatsStruct.h"
 #include "VectorCalculator.h"
 #include <raylib.h>
 #include <time.h>
 
 
-class Alive : public Element, public InEnvironment {
+class Attack;
+
+
+class Alive : public Element {
 protected:
 	StatsStruct stats = StatsStruct(
 		GripStrength::solid,
@@ -25,6 +27,7 @@ protected:
 	virtual void onGetHit(float damage) {
 		this->health -= damage;
 	};
+
 	virtual void onDie() {
 		this->alive = false;
 	};
@@ -40,23 +43,17 @@ protected:
 		}
 	}
 public:
-	Alive() : Element(), InEnvironment() {};
-	Alive(Vector2 pos, float rotation) : Element(pos, rotation), InEnvironment() {};
+	Alive() : Element() {};
+	Alive(Vector2 pos, float rotation) : Element(pos, rotation) {};
 
 	
 
 	//Environment usage
-	void hit(float damage) {
-		this->onGetHit(damage);
-	}
+	void checkHit();
 
-	void spot(Alive* alive) {
-		this->onSpot(alive);
-	}
+	void spot(Alive* alive);
 
-	bool isDead() {
-		return this->alive;
-	}
+	bool isAlive();
 
 
 

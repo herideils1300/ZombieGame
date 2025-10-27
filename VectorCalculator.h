@@ -32,9 +32,13 @@ public:
 	}
 
 	Vector2 normalizeVector(Vector2 vector) {
-		float nominal = sqrtf(powf(vector.x, 2) + powf(vector.y, 2));
+		float nominal = this->calculateDistance(vector.x, vector.y);
 		Vector2 normalizedVector = { vector.x / nominal, vector.y / nominal };
 		return normalizedVector;
+	}
+
+	float calculateDistance(float divX, float divY) {
+		return sqrtf(pow(divX, 2) + pow(divY, 2));
 	}
 
 	bool isVectorInRectangle(Vector2 vec, Rectangle rect) {
@@ -50,7 +54,7 @@ public:
 		float treshold = rectangle.width / 2;
 		float divX = rectangle.x - root.x;
 		float divY = rectangle.y - root.y;
-		float distance = sqrtf(pow(divX, 2) + pow(divY, 2));
+		float distance = this->calculateDistance(divX, divY);
 
 		float angleX = fabsf(distance * cos(angle * DEG2RAD) - divX);
 		float angleY = fabsf(distance * sin(angle * DEG2RAD) - divY);
@@ -60,9 +64,46 @@ public:
 		return isHit;
 	}
 
-	bool isVectorInTriangle(Vector2 position, Vector2 points[3]) {
-		//TODO: Implement calculation if the an vector is in a triangle
-		return false;
+	bool isRectOnStepPath(Rectangle rectangle, Vector2 start, Vector2 step) {
+		float stepAngle = this->alphaAngleCalcualte(step.x, step.y);
+		float distance = this->calculateDistance(step.x, step.y);
+		float angle = this->alphaAngleCalcualte(step.x, step.y);
+
+		bool isWithinStep = (rectangle.x >= start.x && rectangle.x <= (start.x + step.x) && rectangle.y >= start.y && rectangle.y <= (start.y + step.y));
+		bool isOnStepPath = this->isRectOnInfinteLine(rectangle, Rectangle{ start.x, start.y, 0, 0 }, distance, angle);
+		
+		return isWithinStep && isOnStepPath;
+	}
+
+	bool isVectorInRadius(Vector2 vec, Vector2 radCenter, float radius) {
+		float divX = radCenter.x - vec.x;
+		float divY = radCenter.y - vec.y;
+
+		float distance = this->calculateDistance(divX, divY);
+
+		bool isInRadius = (distance < radius);
+
+		return isInRadius;
+	}
+
+	Vector2 calculateStepDirection() {
+
+	}
+
+	bool isVectorInTriangle(Vector2 position, Vector2 root, float width, float height, float angle) {
+		float divX = position.x - root.x;
+		float divY = position.y - root.y;
+
+		float tresholdAngle = atanf(height / (width / 2));
+		float positionAngle = this->alphaAngleCalcualte(divX, divY);
+
+		float distance = this->calculateDistance(divX, divY);
+
+		bool isInTriangle = (fabsf(positionAngle - angle * DEG2RAD) < tresholdAngle && distance < height);
+
+		std::cout << isInTriangle << std::endl;
+
+		return isInTriangle;
 	}
 
 

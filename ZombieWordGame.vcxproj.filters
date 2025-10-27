@@ -51,9 +51,6 @@
     <ClCompile Include="Zombie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Singal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Alive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -95,7 +92,7 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SingalTypes.h">
+    <ClInclude Include="SignalTypes.h">
       <Filter>Mechanics</Filter>
     </ClInclude>
     <ClInclude Include="InEnvironment.h">
@@ -103,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="Environment.h">
       <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveTypes.h">
+      <Filter>Mechanics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

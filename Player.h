@@ -14,6 +14,9 @@ private:
 	//Dependencies
 	VectorCalculator calc = VectorCalculator();
 
+	void onDie() override;
+	void onGetHit(float damage) override;
+
 
 	void updateMove();
 	void updateAim();
