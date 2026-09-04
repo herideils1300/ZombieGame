@@ -16,9 +16,6 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{02987bdf-4a3c-46d0-b709-4c892c08ef23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mechanics">
-      <UniqueIdentifier>{a713cad5-2cba-4eb1-85a5-56cfd9cb6736}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Elements">
       <UniqueIdentifier>{a9b67da8-1010-46e4-a9a6-ce326dc93be6}</UniqueIdentifier>
     </Filter>
@@ -31,6 +28,12 @@
     <Filter Include="Header Files\Attacks\Abstract">
       <UniqueIdentifier>{3d465a6e-fd71-40f1-a45d-48d92813ba89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Weapons">
+      <UniqueIdentifier>{4cee064e-90b6-4684-bba0-c7cf249f2bbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Weapons\Abstract">
+      <UniqueIdentifier>{88b140a2-e9cf-4fdb-b176-22bbd8aff30e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ZombieWordGame.cpp">
@@ -41,9 +44,6 @@
     </ClCompile>
     <ClCompile Include="VectorCalculator.h">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="MechanicsEnums.h">
-      <Filter>Mechanics</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
@@ -58,6 +58,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Environment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,17 +86,8 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files\Elements</Filter>
     </ClInclude>
-    <ClInclude Include="AliveRules.h">
-      <Filter>Mechanics</Filter>
-    </ClInclude>
     <ClInclude Include="Attack.h">
       <Filter>Header Files\Attacks\Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SignalTypes.h">
-      <Filter>Mechanics</Filter>
     </ClInclude>
     <ClInclude Include="InEnvironment.h">
       <Filter>Header Files\Elements\Abstract</Filter>
@@ -101,13 +95,23 @@
     <ClInclude Include="Environment.h">
       <Filter>Header Files\Elements</Filter>
     </ClInclude>
-    <ClInclude Include="AliveTypes.h">
-      <Filter>Mechanics</Filter>
+    <ClInclude Include="VectorSearch.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="ZombieWordGame.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClInclude Include="Hit.h">
+      <Filter>Header Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Weapons\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsDefinition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviourDefinitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

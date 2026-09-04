@@ -4,76 +4,57 @@
 #include <tuple>
 
 
-Environment::Environment(std::vector<Element*> elements)
+EnvironmentObserver::EnvironmentObserver(std::vector<Element*> elements)
 {
-	for (Element* e : elements) {
-		((Alive*)e)->setEnv(this);
-	}
-
 }
 
-void Environment::clearAllStep()
+std::vector<Element*> EnvironmentObserver::getByCoordinates(Vector2 root, float radius)
 {
-	int nullCount = 0;
-	for (int i = 0; i < this->attacks.size(); i++) {
-		if (this->attacks[i]->isDispersed) {
-			nullCount++;
+	std::vector<Element*> elementsInRadius = std::vector<Element*>();
+	for (Element* element : this->elements) {
+		if (this->calc.isVectorInRadius(element->pos, root, radius)) {
+			elementsInRadius.push_back(element);
 		}
 	}
-
-	if (nullCount == this->attacks.size()) {
-		for (int i = 0; i < this->attacks.size(); i++) {
-			delete attacks[i];
-		}
-		attacks.clear();
-	}
-
-
+	return elementsInRadius;
 }
 
-void Environment::sendAttack(Attack* attack)
+void EnvironmentObserver::addAttack(Attack* attack)
 {
-	this->clearAllStep();
-	attack->setEnv(this);
 	this->attacks.push_back(attack);
-	for (Attack* oneAttack : this->attacks) {
-		std::cout << oneAttack << std::endl;
-	}
-	
 }
 
-int Environment::getAttackIndexIfAffecting(Alive* target)
+void EnvironmentObserver::addElement(Element* element)
 {
-	if (this->attacks.empty()) {
-		return -1;
-	}
-
-	bool isAffected = false;
-
-	for (int i = 0; i < this->attacks.size(); i++) {
-		if (this->attacks[i]->isRanged) {
-			isAffected = this->calc.isRectOnStepPath(target->boundingBox, ((Bullet*)attacks[i])->pos, ((Bullet*)attacks[i])->giveStep());
-			if (isAffected) {
-				return i;
-			}
-		}
-		else {
-			isAffected = this->calc.isVectorInTriangle(target->pos, attacks[i]->orgPos, 10.0f, 10.0f, attacks[i]->rotation);
-			if (isAffected) {
-				return i;
-			}
-		}
-	}
-
-	return -1;
+	this->elements.push_back(element);
 }
 
-Attack* Environment::recieveAttack(Alive* target)
+void EnvironmentObserver::initEnv(std::vector<Element*> elements)
 {
-	if (int index = this->getAttackIndexIfAffecting(target) != -1)
-		return this->attacks[index];
-	else
-		return nullptr;
+	this->elements = elements;
+	for (Element* element : this->elements) {
+		element->init();
+	}
+}
 
+void EnvironmentObserver::updateEnv()
+{
+	for (Attack* attack : this->attacks) {
+		attack->update();
+	}
 
+	for (Element* element : this->elements) {
+		element->update();
+	}
+}
+
+void EnvironmentObserver::drawEnv()
+{
+	for (Attack* attack : this->attacks) {
+		attack->draw();
+	}
+
+	for (Element* element : this->elements) {
+		element->draw();
+	}
 }

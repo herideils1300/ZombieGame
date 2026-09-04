@@ -21,7 +21,7 @@ public:
 	float charWidth = 32.0f;
 	float charHeight = 32.0f;
 
-	Element() : InEnvironment() {
+	Element(EnvironmentObserver* env) : InEnvironment(env) {
 		srand(time(NULL));
 
 		this->pos.x = (float)(rand() % 640);
@@ -29,7 +29,8 @@ public:
 
 		this->boundingBox = Rectangle{ this->pos.x, this->pos.y, charWidth, charHeight };
 	};
-	Element(Vector2 pos, float rotation) : InEnvironment() {
+
+	Element(Vector2 pos, float rotation, EnvironmentObserver* env) : InEnvironment(env) {
 		this->pos = pos;
 		this->rotation = rotation;
 

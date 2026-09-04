@@ -3,11 +3,15 @@
 
 class InEnvironment {
 public:
-	Environment* env = new Environment();
-	InEnvironment() {
-		this->env = nullptr;
-	};
-	void setEnv(Environment* env) {
+	EnvironmentObserver* env;
+
+	InEnvironment(EnvironmentObserver* env) {
 		this->env = env;
+	};
+
+	void addToEnv(Attack* element) {
+		if (this->env != nullptr) {
+			this->env->addAttack(element);
+		}
 	}
 };

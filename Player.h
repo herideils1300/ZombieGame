@@ -1,7 +1,11 @@
 #pragma once
 #include <raylib.h>
+#include "PhysicsDefinition.h"
 #include "Alive.h"
 #include "VectorCalculator.h"
+#include "Weapon.h"
+#include "Gun.h"
+
 
 class Player : public Alive
 {
@@ -13,17 +17,18 @@ private:
 
 	//Dependencies
 	VectorCalculator calc = VectorCalculator();
+	Weapon* weapon = new Gun(10.0f /* Damage */, 5 /* Max Number of Attacks */);
 
-	void onDie() override;
-	void onGetHit(float damage) override;
+	void onDie();
+	void onGetHit(float damage);
 
 
 	void updateMove();
 	void updateAim();
 	void updateFire();
 public:
-	Player() : Alive() {};
-	Player(Vector2 pos, float rotation, StatsStruct stats) : Alive(pos, rotation) {
+	Player(EnvironmentObserver* env) : Alive(env) {};
+	Player(Vector2 pos, float rotation, StatsStruct stats, EnvironmentObserver* env) : Alive(pos, rotation, env) {
 		this->stats = stats;
 	}
 	void init() override;

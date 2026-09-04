@@ -17,7 +17,7 @@ void Zombie::moveTowardsTarget()
 	{
 		Vector2 step = Vector2{ (float)((target->pos.x > this->pos.x) - (target->pos.x < this->pos.x)), (float)((target->pos.y > this->pos.y) - (target->pos.y < this->pos.y)) };
 		this->pos = calc.addTwoVectors(this->pos, calc.multplyVector(step, this->stats.sprintSpeed));
-		this->rotation = this->calc.alphaAngleCalcualte((step.x), (step.y)) * RAD2DEG;
+		this->rotation = this->calc.alphaAngleCalculate((step.x), (step.y));
 		this->boundingBox = Rectangle{ this->pos.x, this->pos.y, (float)this->charWidth, (float)this->charHeight };
 	}
 	else {
@@ -39,17 +39,12 @@ void Zombie::onSpot(Alive* spotted)
 }
 
 void Zombie::die() {
-	this->target = nullptr;
+	Alive::onDie();
 }
 
 void Zombie::onGetHit(float damage)
 {
-	this->health -= damage;
-}
-
-void Zombie::onDie()
-{
-	this->alive = false;
+	Alive::onGetHit(damage);
 }
 
 void Zombie::init()
@@ -60,8 +55,12 @@ void Zombie::init()
 
 void Zombie::update()
 {
-	locateTarget();
+	if (!this->alive) {
+		return;
+	}
+
 	updateAlive();
+	locateTarget();
 	moveTowardsTarget();
 }
 
@@ -82,7 +81,7 @@ void Zombie::drawElement()
 
 void Zombie::draw()
 {
-	if (!this->alive) {
+	if (!this->isAlive()) {
 		return;
 	}
 

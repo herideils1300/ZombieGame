@@ -22,32 +22,26 @@ int main() {
 	Color backgroundColor = ColorFromHSV(0, 0, 0);
 
 
-
+	EnvironmentObserver* env = new EnvironmentObserver();
 
 	//Character
-	std::vector<Element*> characters = {
-		new Player(),
-		new Zombie(Vector2{ 100.0f, 100.0f }, 0.0f)
+	std::vector<Element*> elements = {
+		new Player(env),
+		new Zombie(Vector2{ 100.0f, 100.0f }, 0.0f, env)
 	};
 
-	Environment* env = new Environment(characters);
-
-	for (Element* ch : characters) {
-		ch->init();
-	}
-
+	env->initEnv(elements);
 
 	while (!gameOver)
 	{
 		ClearBackground(backgroundColor);
-		for (Element* ch : characters) {
-			ch->update();
-		}
+
+		env->updateEnv();
+
 		BeginDrawing();
-		for (Element* ch : characters) {
-			ch->draw();
-		}
+		env->drawEnv();
 		EndDrawing();
+
 		if (IsKeyPressed(KEY_Q)) {
 			gameOver = true;
 		}

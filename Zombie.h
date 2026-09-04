@@ -32,12 +32,12 @@ private:
 	void drawElement();
 
 	void onGetHit(float damage) override;
-	void onDie() override;
+
+	//Events
 	void onSpot(Alive* spotted) override;
 
 public:
-	Zombie(Vector2 pos, float rotation) : Alive(pos, rotation) {
-	};
+	Zombie(Vector2 pos, float rotation, EnvironmentObserver* env) : Alive(pos, rotation, env) {};
 	void init() override;
 	void update() override;
 	void draw() override;

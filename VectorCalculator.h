@@ -38,7 +38,7 @@ public:
 	}
 
 	float calculateDistance(float divX, float divY) {
-		return sqrtf(pow(divX, 2) + pow(divY, 2));
+		return sqrtf(powf(divX, 2) + powf(divY, 2));
 	}
 
 	bool isVectorInRectangle(Vector2 vec, Rectangle rect) {
@@ -65,14 +65,14 @@ public:
 	}
 
 	bool isRectOnStepPath(Rectangle rectangle, Vector2 start, Vector2 step) {
-		float stepAngle = this->alphaAngleCalcualte(step.x, step.y);
-		float distance = this->calculateDistance(step.x, step.y);
-		float angle = this->alphaAngleCalcualte(step.x, step.y);
+		float stepAngle = this->alphaAngleCalculate(step.x - start.x, step.y - start.y);
+		float distance = this->calculateDistance(rectangle.x - step.x, rectangle.y - step.y);
+		float stepDistance = this->calculateDistance(step.x - start.x, step.y - start.y);
 
-		bool isWithinStep = (rectangle.x >= start.x && rectangle.x <= (start.x + step.x) && rectangle.y >= start.y && rectangle.y <= (start.y + step.y));
-		bool isOnStepPath = this->isRectOnInfinteLine(rectangle, Rectangle{ start.x, start.y, 0, 0 }, distance, angle);
+		bool isWithinStepDistance = (distance <= stepDistance);
+		bool isOnStepPath = this->isRectOnInfinteLine(rectangle, Rectangle{ start.x, start.y, 0, 0 }, stepDistance, stepAngle);
 		
-		return isWithinStep && isOnStepPath;
+		return isWithinStepDistance && isOnStepPath;
 	}
 
 	bool isVectorInRadius(Vector2 vec, Vector2 radCenter, float radius) {
@@ -86,8 +86,8 @@ public:
 		return isInRadius;
 	}
 
-	Vector2 calculateStepDirection() {
-
+	Vector2 calculateStep(float speed, float angle) {
+		return multplyVector(normalizeVector(Vector2{ cosf(angle * DEG2RAD), sinf(angle * DEG2RAD)}), speed);
 	}
 
 	bool isVectorInTriangle(Vector2 position, Vector2 root, float width, float height, float angle) {
@@ -95,7 +95,7 @@ public:
 		float divY = position.y - root.y;
 
 		float tresholdAngle = atanf(height / (width / 2));
-		float positionAngle = this->alphaAngleCalcualte(divX, divY);
+		float positionAngle = this->alphaAngleCalculate(divX, divY);
 
 		float distance = this->calculateDistance(divX, divY);
 
@@ -108,10 +108,10 @@ public:
 
 
 
-	float alphaAngleCalcualte(float divX, float divY) {
+	float alphaAngleCalculate(float divX, float divY) {
 		//divX = fabsf(divX);
 		//divY = fabsf(divY);
-		return (divX <= 0) ? atan(divY / divX) + PI : atan(divY / divX);
+		return (divX <= 0) ? (atan(divY / divX) + PI) * RAD2DEG : atan(divY / divX) * RAD2DEG;
 	};
 
 

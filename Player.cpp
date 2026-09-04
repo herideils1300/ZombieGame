@@ -36,11 +36,11 @@ void Player::updateAim()
 	//Rotation following mouse button
 	if (!this->isSprinting) {
 		Vector2 mousePos = GetMousePosition();
-		this->rotation = this->calc.alphaAngleCalcualte((mousePos.x - this->pos.x), (mousePos.y - this->pos.y)) * RAD2DEG;
+		this->rotation = this->calc.alphaAngleCalculate((mousePos.x - this->pos.x), (mousePos.y - this->pos.y));
 	}
 	else {
 		Vector2 step = Vector2{ (float)(IsKeyDown(KEY_D) - IsKeyDown(KEY_A)), (float)(IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) };
-		this->rotation = this->calc.alphaAngleCalcualte((step.x), (step.y)) * RAD2DEG;
+		this->rotation = this->calc.alphaAngleCalculate((step.x), (step.y)) * RAD2DEG;
 	}
 
 	// Aim logic; Draws a line towards the cursor when aiming
@@ -67,9 +67,10 @@ void Player::updateFire()
 {
 	if (this->isAiming) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-			Bullet* bullet = new Bullet();
 			this->isShooting = true;
-			this->env->sendAttack(bullet);
+			this->env->addAttack(this->weapon->initAttack(this->pos, this->rotation, this->env));
+			//TODO: Move this to the end of the shoot during the animation faze
+			this->isShooting = false;
 		}
 	}
 

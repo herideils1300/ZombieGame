@@ -23,18 +23,24 @@ protected:
 	bool alive = true;
 	VectorCalculator calc = VectorCalculator();
 
-	//Events
+	//Event when the alive element is hit and takes damage.
 	virtual void onGetHit(float damage) {
 		this->health -= damage;
 	};
 
-	virtual void onDie() {
+	//Event when the alive element dies. Sets alive to false.
+	void onDie() {
 		this->alive = false;
 	};
 
-	virtual void onSpot(Alive* spotted) {};
+	//Checks the death of the alive element and calls onDie() if health is 0 or less.
+	void checkDeath() {
+		if (this->health <= 0.0f) {
+			this->onDie();
+		}
+	};
 
-	//Constant reuse functions
+	virtual void onSpot(Alive* spotted) {};
 
 	//Self checks if its alive or dead and updates
 	void updateAlive() {
@@ -43,19 +49,21 @@ protected:
 		}
 	}
 public:
-	Alive() : Element() {};
-	Alive(Vector2 pos, float rotation) : Element(pos, rotation) {};
+	Alive(EnvironmentObserver* env) : Element(env) {};
+	Alive(Vector2 pos, float rotation, EnvironmentObserver* env) : Element(pos, rotation, env) {};
+
+	//Used as an outside function to damage this Alive element.
+	void hit(float damage) {
+		this->onGetHit(damage);
+		this->checkDeath();
+	};
+
+	//Returns the alive status of this Alive element. True if alive, false if dead.
+	bool isAlive() {
+		return this->alive;
+	};
 
 	
-
-	//Environment usage
-	void checkHit();
-
-	void spot(Alive* alive);
-
-	bool isAlive();
-
-
 
 
 };
