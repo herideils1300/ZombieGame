@@ -16,8 +16,7 @@ private:
 	bool isSprinting = false;
 
 	//Dependencies
-	VectorCalculator calc = VectorCalculator();
-	Weapon* weapon = new Gun(10.0f /* Damage */, 5 /* Max Number of Attacks */);
+	Weapon* weapon = nullptr;
 
 	void onDie();
 	void onGetHit(float damage);

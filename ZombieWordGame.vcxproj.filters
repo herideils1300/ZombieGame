@@ -34,6 +34,18 @@
     <Filter Include="Header Files\Weapons\Abstract">
       <UniqueIdentifier>{88b140a2-e9cf-4fdb-b176-22bbd8aff30e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Maps">
+      <UniqueIdentifier>{a9209159-09f1-41d2-8568-9e3de726a3d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Maps\Abstract">
+      <UniqueIdentifier>{5d56630b-396a-4b3e-9a59-bb5e51fb742e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Maps\Segments">
+      <UniqueIdentifier>{d8a9ffa2-d148-4b95-b2a1-350536901b5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Maps\Maps">
+      <UniqueIdentifier>{16235719-6fd2-4ea1-916b-d31ee2a82535}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ZombieWordGame.cpp">
@@ -51,16 +63,22 @@
     <ClCompile Include="Zombie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Alive.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Environment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Gun.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mappable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,12 +110,6 @@
     <ClInclude Include="InEnvironment.h">
       <Filter>Header Files\Elements\Abstract</Filter>
     </ClInclude>
-    <ClInclude Include="Environment.h">
-      <Filter>Header Files\Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="VectorSearch.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Hit.h">
       <Filter>Header Files\Attacks</Filter>
     </ClInclude>
@@ -112,6 +124,21 @@
     </ClInclude>
     <ClInclude Include="BehaviourDefinitions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mappable.h">
+      <Filter>Header Files\Maps\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSegment.h">
+      <Filter>Header Files\Maps\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Maps\Segments</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Header Files\Maps\Maps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,14 +3,19 @@
 #include "Alive.h"
 #include "VectorCalculator.h"
 #include "signal.h"
+#include "StatsStruct.h"
 
 class Zombie : public Alive
 {
 private:
 	//Graphics
 	Color characterColor = ColorFromHSV(130, 200, 20);
-	int charWidth = 32;
-	int charHeight = 32;
+	StatsStruct stats = StatsStruct(
+		GripStrength::solid,
+		MoveSpeed::runner,
+		AimSpeed::soldier,
+		Stamina::joe
+	);
 
 	//Mechanics
 	Alive* target = nullptr;
@@ -18,10 +23,6 @@ private:
 	float damage = 20.0f;
 	Vector2 povPoints[2];
 
-	//Depends
-	VectorCalculator calc = VectorCalculator();
-
-	//Private funcs
 	//update func
 	void locateTarget();
 	void moveTowardsTarget();
@@ -31,16 +32,17 @@ private:
 	void drawPov();
 	void drawElement();
 
+	//Dictates events on hit
 	void onGetHit(float damage) override;
 
 	//Events
 	void onSpot(Alive* spotted) override;
+
 
 public:
 	Zombie(Vector2 pos, float rotation, EnvironmentObserver* env) : Alive(pos, rotation, env) {};
 	void init() override;
 	void update() override;
 	void draw() override;
-	void die();
 };
 

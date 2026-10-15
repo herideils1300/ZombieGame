@@ -3,6 +3,7 @@
 #include <time.h>
 #include <random>
 #include "InEnvironment.h"
+#include "BehaviourDefinitions.h"
 
 class Element : public InEnvironment
 {
@@ -18,8 +19,8 @@ public:
 
 	//Graphics
 	Color characterColor = ColorFromHSV(100, 120, 88);
-	float charWidth = 32.0f;
-	float charHeight = 32.0f;
+	float charWidth = DIMENSIONALITY;
+	float charHeight = DIMENSIONALITY;
 
 	Element(EnvironmentObserver* env) : InEnvironment(env) {
 		srand(time(NULL));

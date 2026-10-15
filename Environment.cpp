@@ -12,15 +12,43 @@ std::vector<Element*> EnvironmentObserver::getByCoordinates(Vector2 root, float 
 {
 	std::vector<Element*> elementsInRadius = std::vector<Element*>();
 	for (Element* element : this->elements) {
-		if (this->calc.isVectorInRadius(element->pos, root, radius)) {
+		if (VectorCalculator::isVectorInRadius(element->pos, root, radius)) {
 			elementsInRadius.push_back(element);
 		}
 	}
 	return elementsInRadius;
 }
 
+std::vector<Element*> EnvironmentObserver::getByAngleInbetween(Vector2 root, float angle, float plusMinusThershold)
+{
+	std::vector<Element*> betweenElements = std::vector<Element*>();
+	for (Element* element : this->elements) {
+		if (VectorCalculator::isVectorBetweenAngles(root, element->pos, angle, plusMinusThershold * DEG2RAD)) {
+			betweenElements.push_back(element);
+		}
+	}
+	return betweenElements;
+}
+
+void EnvironmentObserver::freeElements()
+{
+	for (int i = 0; i < this->attacks.size(); i++) {
+		if (this->attacks[i]->getIsDispersed()) {
+			delete this->attacks[i];
+			this->attacks[i] = nullptr;
+
+		}
+	}
+
+	std::erase(this->attacks, nullptr);
+	this->attacks.shrink_to_fit();
+}
+
 void EnvironmentObserver::addAttack(Attack* attack)
 {
+	if (this->attacks.size() > 10) {
+		freeElements();
+	}
 	this->attacks.push_back(attack);
 }
 

@@ -1,10 +1,19 @@
 #include "Zombie.h"
+#include "PhysicsDefinition.h"
 
 void Zombie::locateTarget()
 {
-	if (this->target == nullptr) {
-		//Implement locating target
+	std::vector<Element*> targets = this->env->getByAngleInbetween(this->pos, this->rotation, 10.0f);
+
+	for (Element* target : targets) {
+		Alive* aliveTarget = dynamic_cast<Alive*>(target);
+		if (aliveTarget == nullptr || !aliveTarget->isAlive()) {
+			continue;
+		}
+		this->onSpot(aliveTarget);
+		break;
 	}
+
 }
 
 void Zombie::moveTowardsTarget()
@@ -13,11 +22,11 @@ void Zombie::moveTowardsTarget()
 		return;
 	}
 
-	if (!calc.areVectorsTheSameAproximately(this->pos, target->pos, this->attackRange))
+	if (!VectorCalculator::areVectorsTheSameAproximately(this->pos, target->pos, this->attackRange))
 	{
-		Vector2 step = Vector2{ (float)((target->pos.x > this->pos.x) - (target->pos.x < this->pos.x)), (float)((target->pos.y > this->pos.y) - (target->pos.y < this->pos.y)) };
-		this->pos = calc.addTwoVectors(this->pos, calc.multplyVector(step, this->stats.sprintSpeed));
-		this->rotation = this->calc.alphaAngleCalculate((step.x), (step.y));
+		Vector2 step = VectorCalculator::normalizeVector(Vector2{ (float)((target->pos.x > this->pos.x) - (target->pos.x < this->pos.x)), (float)((target->pos.y > this->pos.y) - (target->pos.y < this->pos.y)) });
+		this->pos = VectorCalculator::addTwoVectors(this->pos, VectorCalculator::multplyVector(step, this->stats.sprintSpeed));
+		this->rotation = VectorCalculator::alphaAngleCalculate((step.x), (step.y));
 		this->boundingBox = Rectangle{ this->pos.x, this->pos.y, (float)this->charWidth, (float)this->charHeight };
 	}
 	else {
@@ -28,18 +37,15 @@ void Zombie::moveTowardsTarget()
 void Zombie::attack()
 {
 	float attackDamage = 20.0f;
-	//TODO: Implement attack
+	
+	Hit* hit = new Hit(this->env);
+	hit->init(this);
+	this->env->addAttack(hit);
 }
-
-
 
 void Zombie::onSpot(Alive* spotted)
 {
 	this->target = spotted;
-}
-
-void Zombie::die() {
-	Alive::onDie();
 }
 
 void Zombie::onGetHit(float damage)
@@ -50,7 +56,7 @@ void Zombie::onGetHit(float damage)
 void Zombie::init()
 {
 	this->target = nullptr;
-	this->stats.sprintSpeed = 2.0f;
+	this->stats.sprintSpeed = RUN_SPEED;
 }
 
 void Zombie::update()

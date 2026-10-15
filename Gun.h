@@ -12,6 +12,7 @@ public:
 	Gun(float damage, int maxNumberOfAttacks) : Weapon(damage, maxNumberOfAttacks) {
 		this->numberOfAttacks = maxNumberOfAttacks;
 	};
-	Bullet* initAttack(Vector2 pos, float rot, EnvironmentObserver* env) override;
+	Bullet* fire(Vector2 pos, float rot, EnvironmentObserver* env) override;
+	void aim(Vector2 position, float rotation) override;
 };
 

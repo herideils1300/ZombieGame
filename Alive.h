@@ -4,7 +4,7 @@
 #include "VectorCalculator.h"
 #include <raylib.h>
 #include <time.h>
-
+#include "Hit.h"
 
 class Attack;
 
@@ -21,7 +21,6 @@ protected:
 	float health = 100.0f;
 
 	bool alive = true;
-	VectorCalculator calc = VectorCalculator();
 
 	//Event when the alive element is hit and takes damage.
 	virtual void onGetHit(float damage) {
@@ -57,6 +56,10 @@ public:
 		this->onGetHit(damage);
 		this->checkDeath();
 	};
+	
+
+	//Makes the attack follow the alive entity.
+	
 
 	//Returns the alive status of this Alive element. True if alive, false if dead.
 	bool isAlive() {

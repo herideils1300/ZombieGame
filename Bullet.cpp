@@ -5,7 +5,7 @@
 void Bullet::travelAndAttack()
 {
 	//Travel
-	this->pos = this->calc.addTwoVectors(this->pos, this->step);
+	this->pos = VectorCalculator::addTwoVectors(this->pos, this->step);
 
 	//Attack
 	std::vector<Element*> elementsInRadius = this->env->getByCoordinates(this->pos, 15.0f);
@@ -17,7 +17,7 @@ void Bullet::travelAndAttack()
 			continue;
 		}
 
-		if (aliveElement != nullptr && aliveElement->isAlive() && this->calc.isRectOnStepPath(aliveElement->boundingBox, this->pos, this->step)) {
+		if (aliveElement != nullptr && aliveElement->isAlive() && VectorCalculator::isRectOnStepPath(aliveElement->boundingBox, this->pos, this->step)) {
 			aliveElement->hit(this->damage);
 			this->isDispersed = true;
 			break;
@@ -27,7 +27,7 @@ void Bullet::travelAndAttack()
 
 void Bullet::checkDisperse()
 {
-	this->isDispersed = this->calc.calculateDistance(this->pos.x - this->orgPos.x, this->pos.y - this->orgPos.y) > this->distance;
+	this->isDispersed = VectorCalculator::calculateDistance(this->pos.x - this->orgPos.x, this->pos.y - this->orgPos.y) > this->distance;
 }
 
 Vector2 Bullet::giveStep()
@@ -40,6 +40,9 @@ void Bullet::update()
 	if (!this->isDispersed) {
 		this->travelAndAttack();
 		this->checkDisperse();
+	}
+	else {
+		delete this;
 	}
 
 }
