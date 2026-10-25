@@ -30,6 +30,15 @@ std::vector<Element*> EnvironmentObserver::getByAngleInbetween(Vector2 root, flo
 	return betweenElements;
 }
 
+Camera2D EnvironmentObserver::getCamera(Vector2 position, Vector2 offset, float rotation, float zoom)
+{
+	this->camera.offset = offset;
+	this->camera.target = position;
+	this->camera.rotation = rotation;
+	this->camera.zoom = zoom;
+	return this->camera;
+}
+
 void EnvironmentObserver::freeElements()
 {
 	for (int i = 0; i < this->attacks.size(); i++) {
@@ -74,10 +83,15 @@ void EnvironmentObserver::updateEnv()
 	for (Element* element : this->elements) {
 		element->update();
 	}
+
+	this->camera.target = this->elements[0]->pos;
 }
 
 void EnvironmentObserver::drawEnv()
 {
+
+	BeginDrawing();
+
 	for (Attack* attack : this->attacks) {
 		attack->draw();
 	}
@@ -85,4 +99,6 @@ void EnvironmentObserver::drawEnv()
 	for (Element* element : this->elements) {
 		element->draw();
 	}
+
+	EndDrawing();
 }

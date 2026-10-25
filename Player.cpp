@@ -15,8 +15,6 @@ void Player::onGetHit(float damage)
 
 void Player::updateMove()
 {
-
-	Vector2 posValue = this->pos;
 	float moveSpeed = 0.0f;
 
 	if (!this->isAiming)
@@ -27,19 +25,22 @@ void Player::updateMove()
 	this->isSprinting = (moveSpeed == this->stats.sprintSpeed);
 	Vector2 step = Vector2{ (float)(IsKeyDown(KEY_D) - IsKeyDown(KEY_A)) * moveSpeed, (float)(IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) * moveSpeed };
 	this->pos = VectorCalculator::addTwoVectors(this->pos, step);
+
 	this->boundingBox = Rectangle{ this->pos.x, this->pos.y, this->charWidth, this->charHeight };
 }
 
 void Player::updateAim()
 {
 	//Rotation following mouse button
-	if (!this->isSprinting) {
-		Vector2 mousePos = GetMousePosition();
-		this->rotation = VectorCalculator::alphaAngleCalculate((mousePos.x - this->pos.x), (mousePos.y - this->pos.y));
+
+	Vector2 step = Vector2{ (float)(IsKeyDown(KEY_D) - IsKeyDown(KEY_A)), (float)(IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) };
+
+	if (this->isSprinting && step.x != 0 && step.y != 0) {
+		this->rotation = VectorCalculator::alphaAngleCalculate((step.x), (step.y));
 	}
 	else {
-		Vector2 step = Vector2{ (float)(IsKeyDown(KEY_D) - IsKeyDown(KEY_A)), (float)(IsKeyDown(KEY_S) - IsKeyDown(KEY_W)) };
-		this->rotation = VectorCalculator::alphaAngleCalculate((step.x), (step.y)) * RAD2DEG;
+		Vector2 mousePos = GetMousePosition();
+		this->rotation = VectorCalculator::alphaAngleCalculate((mousePos.x - this->pos.x), (mousePos.y - this->pos.y));
 	}
 
 	// Aim logic; Draws a line towards the cursor when aiming
@@ -83,8 +84,6 @@ void Player::updateFire()
 		Attack* attack = this->weapon->fire(this->pos, this->rotation, this->env);
 		this->env->addAttack(attack);
 	}
-		
-
 
 }
 
@@ -106,6 +105,6 @@ void Player::draw()
 	DrawRectanglePro(this->boundingBox, Vector2{ (float)this->boundingBox.width / 2, (float)this->boundingBox.height / 2 }, this->rotation, ColorFromHSV(100, 120, 88));
 	if (this->isAiming && this->weapon != nullptr)
 	{
-		this->weapon->aim(this->pos, this->rotation)  ;
+		this->weapon->aim(this->pos, this->rotation);
 	}
 }

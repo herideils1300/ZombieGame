@@ -46,6 +46,9 @@
     <Filter Include="Header Files\Maps\Maps">
       <UniqueIdentifier>{16235719-6fd2-4ea1-916b-d31ee2a82535}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{1cc4470d-bac9-4c4f-a033-36fbb6af2dd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ZombieWordGame.cpp">
@@ -79,6 +82,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mappable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -139,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Header Files\Maps\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientScene.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

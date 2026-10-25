@@ -16,11 +16,11 @@ void Tile::executeAction(Alive* alive)
 }
 
 void Tile::draw(){
-	if (this->color != nullptr) {
-		DrawRectanglePro(Rectangle{ this->x * DIMENSIONALITY, this->y * DIMENSIONALITY, DIMENSIONALITY, DIMENSIONALITY }, Vector2{ DIMENSIONALITY / 2, DIMENSIONALITY / 2 }, 0.0f, *this->color);
-	}
-	else if(this->texturePath != NULL) {
+	if (this->color == nullptr) {
 		DrawTexturePro(LoadTexture(this->texturePath), Rectangle{ 0, 0, (float)DIMENSIONALITY, (float)DIMENSIONALITY }, Rectangle{ this->x * DIMENSIONALITY, this->y * DIMENSIONALITY, (float)DIMENSIONALITY, (float)DIMENSIONALITY }, Vector2{ 0, 0 }, 0.0f, WHITE);
+	}
+	else if(this->texturePath == nullptr) {
+		DrawRectangle(this->x * DIMENSIONALITY, this->y * DIMENSIONALITY, DIMENSIONALITY, DIMENSIONALITY, *this->color);
 	}
 	else {
 		return;

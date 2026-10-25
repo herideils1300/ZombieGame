@@ -12,6 +12,7 @@ class Attack;
 
 class EnvironmentObserver {
 private:
+	Camera2D camera = { 0 };
 	int deletedElements = 0;
 	int deletedAttacks = 0;
 	std::vector<Attack*> attacks = std::vector<Attack*>();
@@ -30,6 +31,7 @@ public:
 	};
 	std::vector<Element*> getByCoordinates(Vector2 root, float radius);
 	std::vector<Element*> getByAngleInbetween(Vector2 root, float angle, float plusMinusThershold);
+	Camera2D getCamera(Vector2 position, Vector2 offset, float rotation, float zoom);
 	void addAttack(Attack* attack);
 	void addElement(Element* element);
 	void initEnv(std::vector<Element*> elements);

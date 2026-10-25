@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="ClientScene.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Hit.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Attack.h" />
     <ClInclude Include="BehaviourDefinitions.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ClientScene.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Hit.h" />

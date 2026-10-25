@@ -9,11 +9,11 @@ class Tile : public MapSegment
 private:
 	int x = 0, y = 0;
 	const char* texturePath;
-	Color* color = nullptr;
+	Color* color;
 public:
 	Tile(EnvironmentObserver* env) : MapSegment(env) {};
-	Tile(Color* color, EnvironmentObserver* env) : MapSegment(env), color(color) {};
-	Tile(const char* texturePath, EnvironmentObserver* env) : MapSegment(env), texturePath(texturePath)	 {};
+	Tile(Color* color, EnvironmentObserver* env) : MapSegment(env), color(color), texturePath(nullptr) {};
+	Tile(const char* texturePath, EnvironmentObserver* env) : MapSegment(env), texturePath(texturePath), color(nullptr) {};
 	Tile(const char* texturePath, std::function<void(Alive* alive)> action, EnvironmentObserver* env) : MapSegment(action, env), texturePath("") {};
 	bool isAliveNearby();
 	void setTexturePath(const char* path);
